@@ -6,7 +6,7 @@
             <base-badge v-for="area in areas" :key="area" :class="area" :title="area"></base-badge>
         </div>
         <div class="actions">
-            <base-button link mode="outline" to="coaches/c1/contact">Contact</base-button>
+            <base-button link mode="outline" :to="coachContactLink">Contact</base-button>
             <base-button link to="coaches/c1">View Details</base-button>
         </div>
     </li>
@@ -21,7 +21,7 @@ export default{
         },
         coachContactLink()
         {
-            return 'coaches/'+this.id+'/contact';
+            return 'coaches/'+ this.id+ '/contact';
         },
         coachDetailLink()
         {
