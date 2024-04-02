@@ -1,20 +1,22 @@
 <template>
-    <base-dialog :show="!!error" title="An error occured!!" @close="handleError">
-        <p>{{ error }}</p>
-    </base-dialog>
-    <section>
-        <base-card>
-            <header>
-                <h2>Request Received</h2>
-            </header>
-            <base-spinner v-if="isLoading"></base-spinner>
-            <ul v-else-if="hasRequests && !isLoading">
-                <request-item v-for="req in receivedRequest" :key="req.id" :email="req.userEmail"
-                    :message="req.message"></request-item>
-            </ul>
-            <h3 v-else>You haven't received any request yet</h3>
-        </base-card>
-    </section>
+    <div>
+        <base-dialog :show="!!error" title="An error occured!!" @close="handleError">
+            <p>{{ error }}</p>
+        </base-dialog>
+        <section>
+            <base-card>
+                <header>
+                    <h2>Request Received</h2>
+                </header>
+                <base-spinner v-if="isLoading"></base-spinner>
+                <ul v-else-if="hasRequests && !isLoading">
+                    <request-item v-for="req in receivedRequest" :key="req.id" :email="req.userEmail"
+                        :message="req.message"></request-item>
+                </ul>
+                <h3 v-else>You haven't received any request yet</h3>
+            </base-card>
+        </section>
+    </div>
 </template>
 <script>
 import RequestItem from '../../components/request/RequestItem';
@@ -22,10 +24,10 @@ export default {
     components: {
         RequestItem,
     },
-    data(){
+    data() {
         return {
             isLoading: false,
-            error : null
+            error: null
         }
     },
     computed: {
@@ -36,20 +38,20 @@ export default {
             return this.$store.getters['requests/hasRequests'];
         },
     },
-    created(){
+    created() {
         this.loadRequest();
     },
-    methods:{
-        async loadRequest(){
+    methods: {
+        async loadRequest() {
             this.isLoading = true;
-            try{
+            try {
                 await this.$store.dispatch('requests/fetchRequest');
-            }catch (error){
+            } catch (error) {
                 this.error = error.message || 'Something Failed';
             }
             this.isLoading = false;
         },
-        handleError(){
+        handleError() {
             this.error = null;
         }
     }
